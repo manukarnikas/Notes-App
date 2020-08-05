@@ -1,0 +1,11 @@
+.flex-container{
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.header{
+    color:white;
+    font-size:2em;
+    margin: 5px;
+}
