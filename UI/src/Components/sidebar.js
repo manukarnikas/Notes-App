@@ -1,14 +1,35 @@
 import React,{Component} from 'react';
 import './sidebar.css';
-
+import NoteModal from './modal';
 
 class Sidebar extends Component{
+    constructor(){
+        super();
+        this.state = {
+            viewModal: false
+        }
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    openModal(){
+        console.log('open modal')
+        this.setState({
+            viewModal: true
+        })
+    }
+
+    handleClose(){
+        this.setState({
+            viewModal: false
+        })
+    }
+
     render(){
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <button className="btn btn-primary full-width">Add Note <span style={{float:'right'}}><i className="fa fa-plus" aria-hidden="true"></i></span></button>
+                        <button className="btn btn-primary full-width" onClick={event=>{this.openModal()}}>Add Note <span style={{float:'right'}}><i className="fa fa-plus" aria-hidden="true"></i></span></button>
                     </div>
                 </div>
                 <div className="row">
@@ -54,6 +75,8 @@ class Sidebar extends Component{
                         </div>
                     </div>
                 </div>
+                <NoteModal show={this.state.viewModal} close={this.handleClose} reload={this.props.reload}/>
+                
             </div>
         )
     }

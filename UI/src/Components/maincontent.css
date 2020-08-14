@@ -10,3 +10,8 @@
 small{
     color:grey;
 }
+
+.del{
+    color: tomato;
+    font-size: 2em;
+}

@@ -41,7 +41,7 @@ let getNotes = async function () {
 let updateNote = async function (data) {
     try {
         var result = await todo.findOneAndUpdate({
-            _id: data.query._id
+            _id: data.query.id
         }, data.update, {
             upsert: true,
             new: true,
@@ -60,7 +60,7 @@ let updateNote = async function (data) {
 let deleteNote = async function (data) {
     try {
         deldata = {
-            _id: data._id
+            _id: data.id
         }
         var result = await Note.deleteOne(deldata,function(err, obj) {
         if (err) throw err;

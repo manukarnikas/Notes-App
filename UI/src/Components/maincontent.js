@@ -8,16 +8,24 @@ class MainContent extends Component{
             <div>
                 <div className="card full-width">
                     <div className="card-body">
-                        <div className="card-title">
-                            <h5>{this.props.note.title}</h5>
+                        <div className="row">
+                            <div className="col-md-11">
+                                <div className="card-title">
+                                    <h5>{this.props.note.title}</h5>
+                                </div>
+                                <div className="card-text">
+                                    <p>{this.props.note.note}</p>
+                                </div>
+                            </div>
+                            <div className="col-md-1"> 
+                                <i className="fa fa-trash del" onClick={event=>{this.props.deleteNote(this.props.note._id)}} aria-hidden="true"></i>
+                            </div>
                         </div>
-                        <div className="card-text">
-                            <p>{this.props.note.note}</p>
-                        </div>
+                        
                     </div>
                     <div className="card-footer">
-                        <span><small>CREATED DATE : </small></span>
-                        <span style={{float:'right'}}><small>LAST MODIFIED : </small></span>
+                        <span><small>CREATED DATE : </small></span> | 
+                        <span ><small>LAST MODIFIED : </small></span>
                     </div>
                 </div>
                 <br/>
