@@ -6,11 +6,12 @@ import client from '../environment/environment';
 
 //save
 const saveNotesMutation = gql`
-mutation addNote($title: String!,$note: String!) {
-  addNote (title:$title,note:$note) {
+mutation addNote($title: String!,$note: String!, $createdDate: String!) {
+  addNote (title:$title,note:$note,createdDate: $createdDate) {
     _id
     title
     note
+    createdDate
   }
 }`;
 
@@ -36,7 +37,8 @@ class NoteModal extends Component{
             mutation: saveNotesMutation,
             variables: {
                 title: this.state.title,
-                note: this.state.note
+                note: this.state.note,
+                createdDate: new Date()
             }
         }).then(res=>{
             this.props.reload(res.data.addNote);

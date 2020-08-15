@@ -29,14 +29,11 @@ mutation deleteNote($id: String!) {
 
 
 function Content(props){
-  let notes = props.data.map(item=>{
-    return <MainContent key={item._id} note={item} deleteNote={props.delete}/>
-  })  
-  if(props.data.length){
+   if(props.data.length){
     return (
       <div className="grid-maincontent">
           <div className="container">
-            {notes}
+            {props.data}
           </div>
       </div>
     );
@@ -53,10 +50,12 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      notes: []
+      notes: [],
+      search: ''
     }
     this.reloadNotes  = this.reloadNotes.bind(this);
     this.deleteNote  = this.deleteNote.bind(this);
+    this.filter  = this.filter.bind(this);
   }
 
   async componentWillMount(){
@@ -86,7 +85,6 @@ class App extends Component {
   }
 
   async deleteNote(id){
-    console.log('-->id',id)
       await client.mutate({
           mutation: deleteNoteMutation,
           variables: {
@@ -94,7 +92,6 @@ class App extends Component {
           }
       }).then(res=>{
            let notes = this.state.notes.filter(val=>{
-             console.log('val._id',val._id!=id)
              if(val._id!=id)
                 return val;
            });
@@ -106,16 +103,35 @@ class App extends Component {
       })
   }
 
+  filter(data){
+    this.setState({
+      search: data
+    })
+  }
+
   render(){
+    var notesData;
+    if(this.state.search){
+      notesData = this.state.notes.filter(val=>{
+         if( val.title.includes(this.state.search) || val.note.includes(this.state.search) )
+           return val;
+      })
+    }
+    else{
+      notesData = this.state.notes;
+    }
+    let notes = notesData.map(item=>{
+      return <MainContent key={item._id} note={item} deleteNote={this.deleteNote}/>
+    })  
     return (
         <div className="grid-container">
           <div className="grid-nav">
              <Nav/>
           </div>
           <div className="grid-sidebar">
-             <Sidebar reload={this.reloadNotes} />
+             <Sidebar reload={this.reloadNotes} filter={this.filter}/>
           </div>
-           <Content data={this.state.notes} delete={this.deleteNote}/>
+           <Content data={notes} />
         </div>
     );
   }

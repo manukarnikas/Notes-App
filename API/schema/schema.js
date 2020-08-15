@@ -1,11 +1,7 @@
 const graphql = require('graphql');
-const graphqldate = require('graphql-iso-date');
 const NoteDao = require('../Methods/NoteDao');
-;
 
 const { GraphQLObjectType, GraphQLString, GraphQLList,GraphQLSchema} = graphql;
-const { GraphQLDate } = graphqldate;
-
 
 const NoteType = new GraphQLObjectType({
     name: 'Note',
@@ -13,8 +9,8 @@ const NoteType = new GraphQLObjectType({
         _id: {type: GraphQLString },
         title: {type: GraphQLString },
         note: {type: GraphQLString },
-        // createdDate: {type:GraphQLString},
-        // lastModifiedDate:{type:GraphQLDate}
+        createdDate: {type:GraphQLString},
+        // lastModifiedDate:{type:GraphQLString}
     })
 });
 
@@ -40,8 +36,8 @@ const Mutation = new GraphQLObjectType({
             args: {
                 title: {type: GraphQLString},
                 note: {type: GraphQLString},
-                // createdDate: {type:GraphQLString},
-                // lastModifiedDate:{type:GraphQLDate}
+                createdDate: {type:GraphQLString},
+                // lastModifiedDate:{type:GraphQLString}
             },
             resolve(parent,args){
                 return NoteDao.addNote(args);

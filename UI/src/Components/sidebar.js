@@ -35,7 +35,7 @@ class Sidebar extends Component{
                 <div className="row">
                     <div className="col-md-12">
                         <p>SEARCH</p>
-                        <input className="full-width" type="text"/>
+                        <input className="full-width" onChange={event=>{this.props.filter(event.target.value)}} type="text" placeholder="Search ..." />
                     </div>
                 </div>
                 <hr className="section"/>
